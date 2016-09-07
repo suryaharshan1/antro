@@ -35,11 +35,13 @@ public class Trace {
 
     double totalTime;
     double childrenTime;
-
+    long startTime;
+    long endTime;
     private long enterTime;
 
     public Trace(Trace parent, Call call) {
         this.enterTime = System.currentTimeMillis();
+        this.startTime = this.enterTime;
         this.call = call;
         this.parent = parent;
         if(parent == null) {
@@ -61,7 +63,7 @@ public class Trace {
 
     public Trace leave() {
         totalTime = (System.currentTimeMillis() - enterTime) / 1000.0;
-
+        this.endTime = System.currentTimeMillis();
         if(parent != null)
             parent.childrenTime += totalTime;
         return parent;
@@ -92,6 +94,14 @@ public class Trace {
         if (parent.totalTime == 0) return 0.0;
 
         else return ((100.0 * totalTime) / parent.totalTime);
+    }
+
+    public long getStartTime() {
+        return this.startTime;
+    }
+
+    public long getEndTime() {
+        return this.endTime;
     }
 
     public PersistentStack<Call> getCallStack() {

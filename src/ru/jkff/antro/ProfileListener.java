@@ -315,6 +315,10 @@ public class ProfileListener implements SubBuildListener {
             res.put("own", trace.getOwnTime());
         if (trace.getPercentOfParent() > 0)
             res.put("percentOfParent", trace.getPercentOfParent());
+        if (trace.getStartTime() > 0)
+            res.put("startTime", trace.getStartTime());
+        if (trace.getEndTime() > 0)
+            res.put("endTime", trace.getEndTime());
 
         JSONArray children = new JSONArray();
         for (Trace child : trace.getChildren()) {
